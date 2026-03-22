@@ -8,6 +8,7 @@ const AppRoutes = ({
   currentUser,
   setCurrentUser,
   handleVote,
+  handleLogout,
 }) => {
   return (
     <>
@@ -24,6 +25,7 @@ const AppRoutes = ({
               currentUser={currentUser}
               candidates={candidates}
               handleVote={handleVote}
+              handleLogout={handleLogout}
             />
           }
         />

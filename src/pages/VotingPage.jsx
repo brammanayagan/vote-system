@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import CandidateCard from "../components/CandidateCard";
 
-const VotingPage = ({ currentUser, candidates, handleVote }) => {
+const VotingPage = ({ currentUser, candidates, handleVote, handleLogout }) => {
   if (!currentUser) {
     return <Navigate to="/" />;
   }
@@ -36,6 +36,13 @@ const VotingPage = ({ currentUser, candidates, handleVote }) => {
             ))}
           </div>
         )}
+
+        <button
+          onClick={handleLogout}
+          className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+        >
+          Logout
+        </button>
       </div>
     </>
   );

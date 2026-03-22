@@ -1,7 +1,7 @@
 export const voters = [
   {
-    id: "V001",
-    name: "User1",
+    id: "123",
+    name: "bramma",
     voted: false,
     votedCandidateId: null,
   },

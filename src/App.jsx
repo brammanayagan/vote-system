@@ -11,18 +11,34 @@ const App = () => {
   useEffect(() => {
     const storedVoters = JSON.parse(localStorage.getItem("voters"));
     const storedCandidates = JSON.parse(localStorage.getItem("candidates"));
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
 
     if (storedVoters) setVoters(storedVoters);
     if (storedCandidates) setCandidates(storedCandidates);
+    if (storedUser) setCurrentUser(storedUser);
   }, []);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("currentUser");
+
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     localStorage.setItem("voters", JSON.stringify(voters));
   }, [voters]);
 
   useEffect(() => {
-    localStorage.setItem("candidates", JSON.stringify(candidates));
-  }, [candidates]);
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+  }, [currentUser]);
 
   const handleVote = (candidateId) => {
     if (currentUser.voted) return;
@@ -47,6 +63,11 @@ const App = () => {
     });
   };
 
+  const handleLogout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem("currentUser");
+  };
+
   return (
     <>
       <AppRoutes
@@ -55,6 +76,7 @@ const App = () => {
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
         handleVote={handleVote}
+        handleLogout={handleLogout}
       />
     </>
   );
