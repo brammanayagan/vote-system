@@ -7,23 +7,29 @@ const App = () => {
   const [voters, setVoters] = useState(initialVoters);
   const [candidates, setCandidates] = useState(initialCandidates);
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // 🔹 Load data from localStorage (runs once)
   useEffect(() => {
-    const storedVoters = JSON.parse(localStorage.getItem("voters"));
-    const storedCandidates = JSON.parse(localStorage.getItem("candidates"));
-    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    const storedVoters = localStorage.getItem("voters");
+    const storedCandidates = localStorage.getItem("candidates");
+    const storedUser = localStorage.getItem("currentUser");
 
-    if (storedVoters) setVoters(storedVoters);
-    if (storedCandidates) setCandidates(storedCandidates);
-    if (storedUser) setCurrentUser(storedUser);
+    if (storedVoters) setVoters(JSON.parse(storedVoters));
+    if (storedCandidates) setCandidates(JSON.parse(storedCandidates));
+    if (storedUser) setCurrentUser(JSON.parse(storedUser));
+
+    setLoading(false);
   }, []);
 
+  // 🔹 Save data whenever state changes
   useEffect(() => {
     localStorage.setItem("voters", JSON.stringify(voters));
     localStorage.setItem("candidates", JSON.stringify(candidates));
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
   }, [voters, candidates, currentUser]);
 
+  // 🔹 Voting logic
   const handleVote = (candidateId) => {
     if (currentUser.voted) return;
 
@@ -37,20 +43,21 @@ const App = () => {
         : v,
     );
 
+    const updatedUser = updatedVoters.find((v) => v.id === currentUser.id);
+
     setCandidates(updatedCandidates);
     setVoters(updatedVoters);
-
-    setCurrentUser({
-      ...currentUser,
-      voted: true,
-      votedCandidateId: candidateId,
-    });
+    setCurrentUser(updatedUser); // 🔴 IMPORTANT CHANGE
   };
 
+  // 🔹 Logout
   const handleLogout = () => {
     setCurrentUser(null);
     localStorage.removeItem("currentUser");
   };
+
+  // 🔹 Prevent rendering before loading completes
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
 
   return (
     <AppRoutes
@@ -60,6 +67,7 @@ const App = () => {
       setCurrentUser={setCurrentUser}
       handleVote={handleVote}
       handleLogout={handleLogout}
+      loading={loading}
     />
   );
 };

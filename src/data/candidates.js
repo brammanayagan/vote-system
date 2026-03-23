@@ -33,7 +33,7 @@ export const candidates = [
   },
   {
     id: 4,
-    name: "Not Announced",
+    name: "Narendra Modi",
     party: "BJP",
     votes: 0,
     partyLogo:
@@ -44,7 +44,7 @@ export const candidates = [
   },
   {
     id: 5,
-    name: "To Be Confirmed",
+    name: "Senthamizh Seeman",
     party: "NTK",
     votes: 0,
     partyLogo:
@@ -52,5 +52,17 @@ export const candidates = [
     candidateImg:
       "https://i.pinimg.com/736x/0e/e2/71/0ee271dd9853e1f92663bec0e5f91e4e.jpg",
     description: "Tamil identity focus",
+  },
+
+  {
+    id: 6,
+    name: "Kamal Haasan",
+    party: "MNM",
+    candidate: "To Be Confirmed",
+    votes: 0,
+    partyLogo:
+      "https://upload.wikimedia.org/wikipedia/commons/d/d8/Makkal_Needhi_Maiam_Party_Logo.png",
+    candidateImg: "https://image-timescontent.timesgroup.com/thumb/569637.webp",
+    description: "Focused on governance reform and anti-corruption.",
   },
 ];

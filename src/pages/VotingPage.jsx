@@ -2,8 +2,28 @@ import { Navigate } from "react-router-dom";
 import Countdown from "../components/Countdown";
 import CandidateCard from "../components/CandidateCard";
 
-const VotingPage = ({ currentUser, candidates, handleVote, handleLogout }) => {
+const VotingPage = ({
+  currentUser,
+  candidates,
+  handleVote,
+  handleLogout,
+  loading,
+}) => {
+  if (loading) return <p>Loading...</p>;
   if (!currentUser) return <Navigate to="/" />;
+
+  // 🔴 Wrapped vote function (adds alert)
+  const handleVoteWithAlert = (candidateId) => {
+    if (currentUser.voted) return;
+
+    const selectedCandidate = candidates.find((c) => c.id === candidateId);
+
+    handleVote(candidateId);
+
+    alert(
+      `You voted for ${selectedCandidate.name} (${selectedCandidate.party})`,
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -17,7 +37,7 @@ const VotingPage = ({ currentUser, candidates, handleVote, handleLogout }) => {
           <CandidateCard
             key={c.id}
             candidate={c}
-            handleVote={handleVote}
+            handleVote={handleVoteWithAlert}
             disabled={currentUser.voted}
             currentUser={currentUser}
           />
