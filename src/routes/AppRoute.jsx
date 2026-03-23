@@ -11,26 +11,23 @@ const AppRoutes = ({
   handleLogout,
 }) => {
   return (
-    <>
-      <Routes>
-        <Route
-          path="/"
-          element={<Login voters={voters} setCurrentUser={setCurrentUser} />}
-        />
-
-        <Route
-          path="/vote"
-          element={
-            <VotingPage
-              currentUser={currentUser}
-              candidates={candidates}
-              handleVote={handleVote}
-              handleLogout={handleLogout}
-            />
-          }
-        />
-      </Routes>
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={<Login voters={voters} setCurrentUser={setCurrentUser} />}
+      />
+      <Route
+        path="/vote"
+        element={
+          <VotingPage
+            currentUser={currentUser}
+            candidates={candidates}
+            handleVote={handleVote}
+            handleLogout={handleLogout}
+          />
+        }
+      />
+    </Routes>
   );
 };
 
